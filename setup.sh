@@ -23,47 +23,46 @@ then
 else
 	buildDir=$1
 fi
+ 
+mkdir -p $buildDir
+buildDir=$(readlink -f $buildDir)
 
 REPO_CONFIG="\
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/poky.git;branch=rocko;layer=meta \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/poky.git;branch=rocko;layer=meta-poky \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/poky.git;branch=rocko;layer=meta-yocto-bsp \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=rocko;layer=meta-oe \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=rocko;layer=meta-python \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=rocko;layer=meta-filesystems \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=rocko;layer=meta-networking \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=rocko;layer=meta-webserver \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-clang.git;branch=rocko \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-virtualization.git;branch=rocko \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-arm64-ilp32.git;branch=rocko \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-montavista-cgx.git;branch=rocko;layer=qemu-bsp \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-montavista-cgx.git;branch=rocko \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=rocko;layer=meta-perl \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=rocko;layer=meta-gnome \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=rocko;layer=meta-multimedia \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=rocko;layer=meta-xfce \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-selinux.git;branch=rocko \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-security.git;branch=rocko \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-cgl.git;branch=rocko;layer=meta-cgl-common \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-cloud-services.git;branch=rocko;layer=meta-openstack \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-cloud-services.git;branch=rocko \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-montavista-cgl;branch=rocko \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-qa.git;branch=rocko;layer=meta-qa-framework \
-LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-qa.git;branch=rocko;layer=meta-qa-testsuites \
-LAYER@https://git.linaro.org/openembedded/meta-linaro.git;branch=rocko;layer=meta-optee \
-LAYER@https://github.com/renesas-rcar/meta-renesas.git;branch=rocko;layer=meta-rcar-gen3 \
-MACHINE@m3ulcb \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/poky.git;branch=thud;layer=meta \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/poky.git;branch=thud;layer=meta-poky \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/poky.git;branch=thud;layer=meta-yocto-bsp \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=thud;layer=meta-oe \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=thud;layer=meta-python \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=thud;layer=meta-filesystems \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=thud;layer=meta-networking \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=thud;layer=meta-webserver \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-clang.git;branch=thud \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-virtualization.git;branch=thud \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-montavista-cgx.git;branch=thud;layer=qemu-bsp \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-montavista-cgx.git;branch=thud \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=thud;layer=meta-perl \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=thud;layer=meta-gnome \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=thud;layer=meta-multimedia \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-openembedded.git;branch=thud;layer=meta-xfce \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-selinux.git;branch=thud \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-security.git;branch=thud \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-cgl.git;branch=master;layer=meta-cgl-common \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-cloud-services.git;branch=thud;layer=meta-openstack \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-cloud-services.git;branch=thud \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-montavista-cgl;branch=thud \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-qa.git;branch=thud;layer=meta-qa-framework \
+LAYER@https://github.com/MontaVista-OpenSourceTechnology/meta-qa.git;branch=thud;layer=meta-qa-testsuites \
+LAYER@https://git.linaro.org/openembedded/meta-linaro.git;branch=thud;layer=meta-optee \
+LAYER@https://github.com/renesas-rcar/meta-renesas.git;branch=thud-dev;layer=meta-rcar-gen3 \
+MACHINE@h3ulcb \
 OPTEEMACHINE@rcar \
 OPTEEOUTPUTMACHINE@rcar \
 DISTRO@mvista-cgx \
-SOURCE@https://github.com/MontaVista-OpenSourceTechnology/linux-mvista-2.4;branch=mvl-4.14/msd.cgx;meta=MV_KERNEL \
-SOURCE@https://github.com/MontaVista-OpenSourceTechnology/yocto-kernel-cache;branch=yocto-4.14;meta=MV_KERNELCACHE \
+SOURCE@https://github.com/MontaVista-OpenSourceTechnology/linux-mvista-2.6.git;branch=mvl-4.19/msd.cgx \
+SOURCE@https://github.com/MontaVista-OpenSourceTechnology/yocto-kernel-cache.git;branch=yocto-4.19 \
 "
-#We use 2.3.3 build tools because of kenrel version limitations
-BUILD_TOOLS_LOCATION=http://downloads.yoctoproject.org/releases/yocto/yocto-2.3.3/buildtools/
- 
 TOPDIR=$(dirname $THIS_SCRIPT)
-buildtar=x86_64-buildtools-nativesdk-standalone-2.3.3.sh
+buildtar=""
 URL=""
 
 for config in $REPO_CONFIG; do
@@ -76,9 +75,19 @@ for config in $REPO_CONFIG; do
     fi
 done
 
+export BUILD_TOOLS_LOCATION
+export buildtar
+$TOPDIR/bin/fetch-buildtools || $EXIT 1
+
+source $TOPDIR/buildtools/environment-setup-*
+if [ "$?" != "0" ] ; then
+   $EXIT 1
+fi
+
 chmod 755 $TOPDIR/bin/*
 if [[ ("x$URLBASE" != "x") && ( "$HOST" = "staging.support.mvista.com" || "$HOST" = "support.mvista.com") ]] ; then
    git config --global credential.$URLBASE.helper $TOPDIR/bin/git-credential-mvl
+   git config --global http.$URLBASE.cookiefile $($TOPDIR/bin/mvl-fetch -c $URLBASE)
 fi
 
 if [ ! -e $TOPDIR/.drop ] ; then
@@ -86,7 +95,26 @@ if [ ! -e $TOPDIR/.drop ] ; then
       pushd $TOPDIR 2>/dev/null 1>/dev/null
          git config pull.rebase True
          git submodule init || $EXIT 1
-         git submodule update --remote || $EXIT 1
+	 if [ -z "$GIT_RETRIES" ] ; then
+            GIT_RETRIES=5
+	 fi
+	 if [ -z "$GIT_DELAY" ] ; then
+            GIT_DELAY=10
+	 fi
+         GIT_COUNT=1
+         while [ $GIT_COUNT -lt $GIT_RETRIES ] ; do
+            git submodule update --remote
+            if [ $? -eq 0 ] ; then
+                 GIT_RETRIES=0
+                 break
+            fi
+            GIT_COUNT=$(($GIT_COUNT + 1))
+	    echo "git submodule update failed, sleeping for $GIT_DELAY seconds and retrying"
+            sleep $GIT_DELAY
+         done
+         if [ $GIT_RETRIES != 0 ] ; then
+            $EXIT 1
+         fi
       popd  2>/dev/null 1>/dev/null
    else
       pushd $TOPDIR 2>/dev/null >/dev/null
@@ -94,17 +122,9 @@ if [ ! -e $TOPDIR/.drop ] ; then
       popd 2>/dev/null >/dev/null
    fi
 fi
-export BUILD_TOOLS_LOCATION
-export buildtar
-$TOPDIR/bin/fetch-buildtools || $EXIT 1
 
 if [ -z "$TEMPLATECONF" -o ! -d "$TEMPLATECONF" ] ; then
     export TEMPLATECONF=$TOPDIR/layers/meta-montavista-cgx/conf
-fi
-
-source $TOPDIR/buildtools/environment-setup-*
-if [ "$?" != "0" ] ; then
-   $EXIT 1
 fi
 
 source $TOPDIR/layers/poky/oe-init-build-env $buildDir 
@@ -201,6 +221,11 @@ for config in $REPO_CONFIG; do
           echo "BB_HASHBASE_WHITELIST_append += \"$(echo $META)_TREE\"" >> conf/local-content.conf
           echo >> conf/local-content.conf
     fi
+    if [ "$VAR" = "CONFIG" ] ; then
+       option=$(echo $VAL | cut -d = -f 1)
+       setting=$(echo $VAL | cut -d = -f 2)
+       echo "$option ?= '$setting'" >> conf/local-content.conf
+    fi   
 done
 if [ -n "$SOURCE_MIRROR_URL" ] ; then
    if [ -z "$(echo $SOURCE_MIRROR_URL | grep "://")" ] ; then
@@ -209,6 +234,7 @@ if [ -n "$SOURCE_MIRROR_URL" ] ; then
    fi
    echo "SOURCE_MIRROR_URL = '$SOURCE_MIRROR_URL'" >> conf/local-content.conf
    echo >> conf/local-content.conf
+   SOURCE_MIRROR_URL=""
 fi
 if [ -n "$PROTECTED_SOURCE_URL" ] ; then 
    if [ -z "$(echo $PROTECTED_SOURCE_URL | grep "://")" ] ; then
@@ -217,6 +243,7 @@ if [ -n "$PROTECTED_SOURCE_URL" ] ; then
    fi
    echo "PROTECTED_SOURCE_URL = '$PROTECTED_SOURCE_URL'" >> conf/local-content.conf
    echo >> conf/local-content.conf
+   PROTECTED_SOURCE_URL=""
 fi
 
 if [ -n "$SSTATE_MIRRORS" ] ; then
@@ -224,7 +251,9 @@ if [ -n "$SSTATE_MIRRORS" ] ; then
       # Assume file
       SSTATE_MIRRORS="file://$SSTATE_MIRRORS"
    fi
-        echo "SSTATE_MIRRORS = 'file://.*  $SSTATE_MIRRORS/PATH \n '" >> conf/local-content.conf
+   echo "SSTATE_MIRRORS = 'file://.*  $SSTATE_MIRRORS/PATH \n '" >> conf/local-content.conf
+   echo >> conf/local-content.conf
+   SSTATE_MIRRORS=""
 fi
 
 export -n BB_NO_NETWORK

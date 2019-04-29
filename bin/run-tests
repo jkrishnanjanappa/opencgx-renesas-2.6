@@ -1,4 +1,12 @@
 #!/bin/bash
+#
+# Copyright (c) 2009-2018 MontaVista Software, LLC.  All rights reserved.
+#
+# This file is licensed under the terms of the GNU General Public License
+# version 2. This program is licensed "as is" without any warranty of any
+# kind, whether express or implied.
+#
+
 if [ -n "$BASH_SOURCE" ]; then
     THIS_SCRIPT=$BASH_SOURCE
 elif [ -n "$ZSH_NAME" ]; then

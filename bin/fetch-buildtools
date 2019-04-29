@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# Copyright (c) 2009-2018 MontaVista Software, LLC.  All rights reserved.
+#
+# This file is licensed under the terms of the GNU General Public License
+# version 2. This program is licensed "as is" without any warranty of any
+# kind, whether express or implied.
+#
 
 if [ -n "$BASH_SOURCE" ]; then
     THIS_SCRIPT=$BASH_SOURCE
@@ -33,6 +40,15 @@ check_lynx () {
        $EXIT 1
     fi
 } 
+USER_OPTION=""
+if [ -n "$MVL_USERNAME" ] ; then
+   USER_OPTION="--username $MVL_USERNAME"
+fi
+PASS_OPTION=""
+if [ -n "$MVL_PASSWORD" ] ; then
+   PASS_OPTION="--password $MVL_PASSWORD"
+fi
+
 fetch_command () {
     downloadLocation=$1
     uri=$2
@@ -40,7 +56,7 @@ fetch_command () {
     if [ -d "$(dirname $uri)" ] ; then
        cp $uri $downloadLocation
     elif [ "$host" = "staging.support.mvista.com" -o "$host" = "support.mvista.com" ] ; then
-       $TOPDIR/bin/mvl-fetch -O $downloadLocation $uri
+       $TOPDIR/bin/mvl-fetch $USER_OPTION $PASS_OPTION -O $downloadLocation $uri
     else
        wget -O $downloadLocation $uri
     fi
@@ -64,7 +80,7 @@ if [ ! -d buildtools ] ; then
          TMPFILE=`mktemp --suffix=.html`
          fetch_command $TMPFILE $(echo $BUILD_TOOLS_LOCATION | sed s,/$,,)
          buildtar=$(lynx -dump -nolist $TMPFILE |
-            grep "\.sh" | grep -v md5sum | sed "s:\[TXT\]::" | while read A B C; do echo $A; done)
+            grep "\.sh" | grep -v md5sum | grep -v '..>' | sed "s:\[TXT\]::" | while read A B C; do echo $A; done)
          rm -f $TMPFILE
       fi
       if [ "$buildtar" = "[" ] ; then
@@ -72,7 +88,7 @@ if [ ! -d buildtools ] ; then
          TMPFILE=`mktemp --suffix=.html`
          fetch_command $TMPFILE $(echo $BUILD_TOOLS_LOCATION | sed s,/$,,)
          buildtar=$(lynx -dump -nolist $TMPFILE | 
-             grep "\.sh" | grep -v md5sum | while read A B C D; do echo $C; done)
+             grep "\.sh" | grep -v md5sum | grep -v '..>' | while read A B C D; do echo $C; done)
          rm -f $TMPFILE
       fi
 

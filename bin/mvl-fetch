@@ -52,6 +52,7 @@ class CmdOptions(object):
         parser.add_option("--uri", dest="uri", default=None, help="set uri", metavar="<uri>")
         parser.add_option("--progress", dest="progress", default=None, help="does nothing", metavar="<value>")
         parser.add_option("-v", dest="progress", action="store_true", default=False, help="does nothing", metavar="<value>")
+        parser.add_option("-c", dest="cookie", action="store_true", default=False, help="outputs cookie path", metavar="<value>")
 
         group = OptionGroup(parser, "Advance Options")
         parser.add_option_group(group)

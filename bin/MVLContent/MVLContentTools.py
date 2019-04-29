@@ -427,6 +427,9 @@ def downloadFileUsingURLLib(url, workingdir=os.getcwd(), dirPrefix=None, verbose
     if (user != None) :
         username = user.getUsername()
     cookiesFilePath = getCookiesFilePath(url, username)
+    if options.cookie:
+       print cookiesFilePath
+       sys.exit(0)
     logger.log(logging.DEBUG, 'Starting downloading file using urllib2')
     logger.log(logging.DEBUG, 'url=' + url)
     logger.log(logging.DEBUG, 'workingdir=' + workingdir)
@@ -554,7 +557,7 @@ def downloadFileUsingURLLib(url, workingdir=os.getcwd(), dirPrefix=None, verbose
                     user.setPassword(password)
                     logger.log(logging.DEBUG, 'Updating user: ' + user.getUsername() + ' in content password manager')
                 passwordManager.saveToken()
-                return downloadFileUsingURLLib(url, workingdir, dirPrefix, timeout, destFile)
+                return downloadFileUsingURLLib(url, workingdir, dirPrefix, verbose, timeout, destFile)
 
 
         else :
@@ -583,7 +586,7 @@ def downloadFileUsingURLLib(url, workingdir=os.getcwd(), dirPrefix=None, verbose
             # if connection reset by peer or timeout
             if str(e.reason).find('Connection reset by peer') != -1 or str(e.reason).find('The read operation timed out') != -1 :
                 sys.stderr.write('Retrying download. URI: ' + url + '...\n')
-                return downloadFileUsingURLLib(url, workingdir, dirPrefix, timeout, destFile)
+                return downloadFileUsingURLLib(url, workingdir, dirPrefix, verbose, timeout, destFile)
         sys.stderr.write('Exiting.\n')
         logger.log(logging.DEBUG, 'program exists with error code 3\n')
         sys.exit(3)
@@ -597,11 +600,11 @@ def downloadFileUsingURLLib(url, workingdir=os.getcwd(), dirPrefix=None, verbose
     except socket.timeout :
         sys.stderr.write('socket timeout\n')
         sys.stderr.write('Retrying download URI: ' + url + '...\n')
-        return downloadFileUsingURLLib(url, workingdir, dirPrefix, timeout, destFile)
+        return downloadFileUsingURLLib(url, workingdir, dirPrefix, verbose, timeout, destFile)
     except socket.error, e :
         sys.stderr.write('socket.error: (' + str(e) + ')\n')
         sys.stderr.write('Retrying download. URI: ' + url + '...\n')
-        return downloadFileUsingURLLib(url, workingdir, dirPrefix, timeout, destFile)
+        return downloadFileUsingURLLib(url, workingdir, dirPrefix, verbose, timeout, destFile)
     except IOError, e :
         parsed = urlparse(url)
         srcname = parsed[2]

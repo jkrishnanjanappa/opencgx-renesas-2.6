@@ -1,20 +1,33 @@
-# Release repository for m3ulcb
+# Release repository for h3ulcb
 
-Montavista Software, LLC. release of m3ulcb. 
+Montavista Software, LLC. release of h3ulcb.
 
 How to use:
 ==========
 ```
-git clone --recursive https://github.com/MontaVista-OpenSourceTechnology/opencgx-renesas-4.14-2.4
-cd opencgx-renesas-4.14-2.4
+git clone --recursive https://github.com/MontaVista-OpenSourceTechnology/opencgx-renesas-2.6
+cd opencgx-renesas-2.6
 source setup.sh
 ```
-
-By default, the script will create a project called project, you may change this
-by adding the directory name you would like to use on the source line:
+Optionally, you can pass setup.sh a directory name to use instead of the
+default "project" as follows:
 
 ```
-source setup.sh <my directory>
+source setup.sh <project directory>
+```
+Note: If you are running setup.sh under another script, you should execute it
+as a shell script:
+
+```
+bash setup.sh <project directory>
+source <project directory>/setup.sh
+```
+The kernel sources by default will be checked out locally to the sources
+directory. If you would rather have bitbake do the checkout run the following
+command prior to sourcing setup.sh:
+
+```
+export LOCAL_SOURCES=0
 ```
 
 After running the top level setup.sh, you are ready to build. When starting
@@ -23,27 +36,14 @@ to get started. This script will automatically source the environment for
 the build tools stored under buildtools, and sources the 
 poky/oe-init-build-env script.
 
-From that point, the project should work like any other yocto based build system. So
-a command like the following will build images.
-
-```
-cd project
-or
-cd <my directory>
-source setup.sh
-bitbake core-image-minimal 
-```
-
-For additional information see the yocto documentaion: https://www.yoctoproject.org/docs/
-
 directory layout:
 ================
 ```
-opencgx-renesas-4.14-2.4/
-       project - bitbake project for the m3ulcb project build
+opencgx-renesas-2.6/
+       project - bitbake project for the h3ulcb project build
        buildtools - build tools to provide minimal build requirement for poky builds
-       layers - layers for building m3ulcb project
-       setup.sh - project setup script  
+       layers - layers for building h3ulcb project
+       setup.sh - project setup script
 ```
 
-The default MACHINE is m3ulcb.
+The default MACHINE is h3ulcb.

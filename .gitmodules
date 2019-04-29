@@ -4,8 +4,8 @@
 	branch = mvl-4.14/msd.cgx
 [submodule "sources/yocto-kernel-cache"]
 	path = sources/yocto-kernel-cache
-	url = https://github.com/MontaVista-OpenSourceTechnology/yocto-kernel-cache
-	branch = yocto-4.14
+	url = https://github.com/MontaVista-OpenSourceTechnology/yocto-kernel-cache.git
+	branch = yocto-4.19
 [submodule "layers/poky"]
 	path = layers/poky
 	url = https://github.com/MontaVista-OpenSourceTechnology/poky.git
@@ -62,3 +62,7 @@
 	path = layers/meta-renesas
 	url = https://github.com/renesas-rcar/meta-renesas
 	branch = rocko
+[submodule "sources/linux-mvista-2.6"]
+	path = sources/linux-mvista-2.6
+	url = https://github.com/MontaVista-OpenSourceTechnology/linux-mvista-2.6.git
+	branch = mvl-4.19/msd.cgx
