@@ -41,7 +41,7 @@
 [submodule "layers/meta-cloud-services"]
 	path = layers/meta-cloud-services
 	url = https://github.com/MontaVista-OpenSourceTechnology/meta-cloud-services.git
-	branch = rocko
+	branch = thud
 [submodule "layers/meta-montavista-cgl"]
 	path = layers/meta-montavista-cgl
 	url = https://github.com/MontaVista-OpenSourceTechnology/meta-montavista-cgl
